@@ -1,25 +1,3 @@
-/*
- * Copyright (c) 2020-2021, NVIDIA CORPORATION.  All rights reserved.
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms and conditions of the GNU General Public License,
- * version 2, as published by the Free Software Foundation.
- *
- * This program is distributed in the hope it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-
-/*
- * Jetson Device-tree overlay for MCP251x CAN Controller.
- */
-
-#include <dt-bindings/pinctrl/pinctrl-tegra.h>
-
 / {
 	overlay-name = "MCP251x CAN Controller";
 	jetson-header-name = "Jetson 40pin Header";
@@ -32,25 +10,33 @@
 				can_clock: can_clock {
 					compatible = "fixed-clock";
 					#clock-cells = <0>;
-					clock-frequency = <20000000>;
+					clock-frequency = <40000000>;
 					clock-accuracy = <100>;
 				};
 			};
 		};
 	};
 
+
 	fragment@1 {
-		target = <&hdr40_spi1>;
+		target = <&spi0>;
+		__overlay__ {
+                        status = "okay";
+                };
+        };
+
+	fragment@2 {
+		target = <&spi0>;
 		__overlay__ {
 			spi@0 {
-				compatible = "microchip,mcp2515";
+				compatible = "microchip,mcp2518fd";
 				reg = <0x0>;
-				spi-max-frequency = <10000000>;
+				spi-max-frequency = <17000000>;
 				nvidia,enable-hw-based-cs;
 				nvidia,rx-clk-tap-delay = <0x7>;
 				clocks = <&can_clock>;
-				interrupt-parent = <&gpio>;
-				interrupts = <HDR40_PIN31_GPIO 0x1>;
+				interrupt-parent = <&tegra_main_gpio>;
+				interrupts = <TEGRA234_MAIN_GPIO(Q, 6) IRQ_TYPE_LEVEL_LOW>;
 				controller-data {
 					nvidia,cs-setup-clk-count = <0x1e>;
 					nvidia,cs-hold-clk-count = <0x1e>;
@@ -61,6 +47,19 @@
 		};
 	};
 
+	fragment@3 {
+		target = <&tegra_main_gpio>;
+		__overlay__ {
+			soc_gpio33_pq6 {
+				gpio-hog;
+				input;
+				gpios = <TEGRA234_MAIN_GPIO(Q, 6) 0>;
+				label = "can0_int";
+			};
+		};
+	};
+
+/*
 	fragment@2 {
 		target = <&pinmux>;
 		__overlay__ {
@@ -106,4 +105,5 @@
 			};
 		};
 	};
+*/
 };

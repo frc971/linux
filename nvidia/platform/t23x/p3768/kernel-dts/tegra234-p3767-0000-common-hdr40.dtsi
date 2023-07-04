@@ -138,21 +138,19 @@
 				};
 				hdr40-pin29 {
 					nvidia,pins = "soc_gpio32_pq5";
-					nvidia,function = "extperiph3";
-					nvidia,pin-group = "extperiph3_clk";
-					nvidia,pull = <TEGRA_PIN_PULL_NONE>;
-					nvidia,tristate = <TEGRA_PIN_DISABLE>;
-					nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+					nvidia,function = "rsvd0";
+					nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+					nvidia,tristate = <TEGRA_PIN_ENABLE>;
+					nvidia,enable-input = <TEGRA_PIN_ENABLE>;
 					nvidia,io-high-voltage = <TEGRA_PIN_DISABLE>;
 					nvidia,lpdr = <TEGRA_PIN_DISABLE>;
 				};
 				hdr40-pin31 {
 					nvidia,pins = "soc_gpio33_pq6";
-					nvidia,function = "extperiph4";
-					nvidia,pin-group = "extperiph4_clk";
-					nvidia,pull = <TEGRA_PIN_PULL_NONE>;
-					nvidia,tristate = <TEGRA_PIN_DISABLE>;
-					nvidia,enable-input = <TEGRA_PIN_DISABLE>;
+					nvidia,function = "rsvd0";
+					nvidia,pull = <TEGRA_PIN_PULL_DOWN>;
+					nvidia,tristate = <TEGRA_PIN_ENABLE>;
+					nvidia,enable-input = <TEGRA_PIN_ENABLE>;
 					nvidia,io-high-voltage = <TEGRA_PIN_DISABLE>;
 					nvidia,lpdr = <TEGRA_PIN_DISABLE>;
 				};
