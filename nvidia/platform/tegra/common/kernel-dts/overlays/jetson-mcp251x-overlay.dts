@@ -17,7 +17,10 @@
 /*
  * Jetson Device-tree overlay for MCP251x CAN Controller.
  */
+/dts-v1/;
+/plugin/;
 
+#include <dt-common/jetson/tegra234-p3767-0000-common.h>
 #include <dt-bindings/pinctrl/pinctrl-tegra.h>
 
 / {
@@ -43,14 +46,14 @@
 		target = <&hdr40_spi1>;
 		__overlay__ {
 			spi@0 {
-				compatible = "microchip,mcp2515";
+				compatible = "microchip,mcp2518fd";
 				reg = <0x0>;
 				spi-max-frequency = <10000000>;
 				nvidia,enable-hw-based-cs;
 				nvidia,rx-clk-tap-delay = <0x7>;
 				clocks = <&can_clock>;
 				interrupt-parent = <&gpio>;
-				interrupts = <HDR40_PIN31_GPIO 0x1>;
+				interrupts = <TEGRA234_MAIN_GPIO(P, 6) 0x1>;
 				controller-data {
 					nvidia,cs-setup-clk-count = <0x1e>;
 					nvidia,cs-hold-clk-count = <0x1e>;
