@@ -7,7 +7,7 @@ ifneq ($(filter y,$(CONFIG_ARCH_TEGRA_23x_SOC)),)
 BUILD_ENABLE=y
 endif
 
-dtbo-$(BUILD_ENABLE) += jetson-mcp251x.dtbo
+dtbo-$(BUILD_ENABLE) += jetson-mcp251x-overlay.dtbo
 
 ifneq ($(dtbo-y),)
 dtbo-y := $(addprefix $(makefile-path)/,$(dtbo-y))
