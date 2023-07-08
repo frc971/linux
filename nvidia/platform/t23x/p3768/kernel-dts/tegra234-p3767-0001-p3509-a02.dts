@@ -26,4 +26,7 @@
 
 #include "tegra234-p3767-0000-common-hdr40.dtsi"
 
+#include <dt-common/jetson/tegra234-p3767-0000-common.h>
+#include <dt-bindings/pinctrl/pinctrl-tegra.h>
+
 #include <overlays/jetson-mcp251x-overlay.dtsi>
