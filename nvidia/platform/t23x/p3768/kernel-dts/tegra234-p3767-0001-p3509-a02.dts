@@ -23,3 +23,7 @@
 	compatible = "nvidia,p3509-0000+p3767-0001", "nvidia,p3767-0001", "nvidia,tegra234", "nvidia,tegra23x";
 	model = "NVIDIA Orin NX Developer Kit";
 };
+
+#include "tegra234-p3767-0000-common-hdr40.dtsi"
+
+//#include <overlays/jetson-mcp251x-overlay.dtsi>
