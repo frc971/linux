@@ -26,4 +26,4 @@
 
 #include "tegra234-p3767-0000-common-hdr40.dtsi"
 
-//#include <overlays/jetson-mcp251x-overlay.dtsi>
+#include <overlays/jetson-mcp251x-overlay.dtsi>
