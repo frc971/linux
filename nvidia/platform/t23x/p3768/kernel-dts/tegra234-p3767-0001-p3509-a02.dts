@@ -24,6 +24,8 @@
 	model = "NVIDIA Orin NX Developer Kit";
 };
 
+#include <dt-bindings/interrupt-controller/irq.h>
+
 #include "tegra234-p3767-0000-common-hdr40.dtsi"
 
 #include <dt-common/jetson/tegra234-p3767-0000-common.h>

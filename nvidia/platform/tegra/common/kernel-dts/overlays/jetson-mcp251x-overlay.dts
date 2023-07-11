@@ -22,5 +22,6 @@
 
 #include <dt-common/jetson/tegra234-p3767-0000-common.h>
 #include <dt-bindings/pinctrl/pinctrl-tegra.h>
+#include <dt-bindings/interrupt-controller/irq.h>
 
 #include <overlays/jetson-mcp251x-overlay.dtsi>
