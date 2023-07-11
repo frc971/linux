@@ -36,13 +36,25 @@
 				nvidia,rx-clk-tap-delay = <0x7>;
 				clocks = <&can_clock>;
 				interrupt-parent = <&tegra_main_gpio>;
-				interrupts = <TEGRA234_MAIN_GPIO(Q, 6) 0x1>;
+				interrupts = <TEGRA234_MAIN_GPIO(Q, 6) GPIO_ACTIVE_LOW>;
 				controller-data {
 					nvidia,cs-setup-clk-count = <0x1e>;
 					nvidia,cs-hold-clk-count = <0x1e>;
 					nvidia,rx-clk-tap-delay = <0x1f>;
 					nvidia,tx-clk-tap-delay = <0x0>;
 				};
+			};
+		};
+	};
+
+	fragment@3 {
+		target = <&tegra_main_gpio>;
+		__overlay__ {
+			soc_gpio33_pq6 {
+				gpio-hog;
+				input;
+				gpios = <TEGRA234_MAIN_GPIO(Q, 6) 0>;
+				label = "can0_int";
 			};
 		};
 	};
