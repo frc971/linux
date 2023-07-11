@@ -36,7 +36,7 @@
 				nvidia,rx-clk-tap-delay = <0x7>;
 				clocks = <&can_clock>;
 				interrupt-parent = <&tegra_main_gpio>;
-				interrupts = <TEGRA234_MAIN_GPIO(Q, 6) GPIO_ACTIVE_LOW>;
+				interrupts = <TEGRA234_MAIN_GPIO(Q, 6) IRQ_TYPE_LEVEL_LOW>;
 				controller-data {
 					nvidia,cs-setup-clk-count = <0x1e>;
 					nvidia,cs-hold-clk-count = <0x1e>;
