@@ -7,6 +7,7 @@ obj-$(CONFIG_NV_VIDEO_IMX185) += nv_imx185.o
 obj-$(CONFIG_NV_VIDEO_IMX185) += nv_imx185_v1.o
 obj-$(CONFIG_NV_VIDEO_IMX477) += nv_imx477.o
 obj-$(CONFIG_NV_VIDEO_IMX219) += nv_imx219.o
+obj-$(CONFIG_NV_VIDEO_IMX296) += nv_imx296.o
 obj-$(CONFIG_NV_VIDEO_IMX268) += nv_imx268.o
 obj-$(CONFIG_NV_VIDEO_IMX274) += nv_imx274.o
 obj-$(CONFIG_NV_VIDEO_IMX318) += nv_imx318.o

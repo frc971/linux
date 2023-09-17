@@ -50,7 +50,7 @@ struct tegra_capture_ivc {
 	/** Channel write lock */
 	struct mutex ivc_wr_lock;
 	/** Deferred work */
-	struct work_struct work;
+	struct kthread_work work;
 	/** Channel work queue head */
 	wait_queue_head_t write_q;
 	/** Array holding callbacks registered by each channel */
@@ -59,6 +59,8 @@ struct tegra_capture_ivc {
 	spinlock_t avl_ctx_list_lock;
 	/** Linked list holding callback contexts */
 	struct list_head avl_ctx_list;
+        /** Worker */
+        struct kthread_worker *worker;
 };
 
 /**
@@ -98,7 +100,7 @@ static struct tegra_capture_ivc *__scivc_capture;
  * @param[in]	work	work_struct pointer
  */
 static void tegra_capture_ivc_worker(
-	struct work_struct *work);
+	struct kthread_work *work);
 
 /**
  * @brief Implementation of IVC notify operation which gets called when we any

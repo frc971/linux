@@ -22,6 +22,7 @@
 #include <linux/completion.h>
 #include <linux/module.h>
 #include <linux/platform_device.h>
+#include <linux/kthread.h>
 #include <linux/of.h>
 #include <linux/of_device.h>
 #include <linux/pm_runtime.h>
@@ -356,7 +357,7 @@ static inline void tegra_capture_ivc_recv(struct tegra_capture_ivc *civc)
 	}
 }
 
-static void tegra_capture_ivc_worker(struct work_struct *work)
+static void tegra_capture_ivc_worker(struct kthread_work *work)
 {
 	struct tegra_capture_ivc *civc;
 	struct tegra_ivc_channel *chan;
@@ -386,7 +387,7 @@ static void tegra_capture_ivc_notify(struct tegra_ivc_channel *chan)
 
 	/* Only 1 thread can wait on write_q, rest wait for write_lock */
 	wake_up(&civc->write_q);
-	schedule_work(&civc->work);
+	kthread_queue_work(civc->worker, &civc->work);
 }
 
 #define NV(x) "nvidia," #x
@@ -416,7 +417,13 @@ static int tegra_capture_ivc_probe(struct tegra_ivc_channel *chan)
 	mutex_init(&civc->ivc_wr_lock);
 
 	/* Initialize ivc_work */
-	INIT_WORK(&civc->work, tegra_capture_ivc_worker);
+	kthread_init_work(&civc->work, tegra_capture_ivc_worker);
+
+        civc->worker = kthread_create_worker(0, "ivc/%s", dev_name(dev));
+	if (IS_ERR(civc->worker)) {
+		dev_err(dev, "failed to create kworker\n");
+		return PTR_ERR(civc->worker);
+        }
 
 	/* Initialize wait queue */
 	init_waitqueue_head(&civc->write_q);
@@ -451,7 +458,8 @@ static void tegra_capture_ivc_remove(struct tegra_ivc_channel *chan)
 {
 	struct tegra_capture_ivc *civc = tegra_ivc_channel_get_drvdata(chan);
 
-	cancel_work_sync(&civc->work);
+	kthread_cancel_work_sync(&civc->work);
+        kthread_destroy_worker(civc->worker);
 
 	if (__scivc_control == civc)
 		__scivc_control = NULL;

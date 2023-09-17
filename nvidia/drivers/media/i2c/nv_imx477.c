@@ -19,6 +19,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define DEBUG 1
+
 #include <linux/slab.h>
 #include <linux/uaccess.h>
 #include <linux/gpio.h>
@@ -122,6 +124,8 @@ static inline int imx477_write_reg(struct camera_common_data *s_data,
 {
 	int err = 0;
 
+        dev_dbg(s_data->dev, "%s: i2c write, 0x%x = %x",
+			__func__, addr, val);
 	err = regmap_write(s_data->regmap, addr, val);
 	if (err)
 		dev_err(s_data->dev, "%s: i2c write failed, 0x%x = %x",
