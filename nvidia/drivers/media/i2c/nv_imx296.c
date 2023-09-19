@@ -172,17 +172,15 @@ static int imx296_set_gain(struct tegracam_device *tc_dev, s64 val)
 	//imx296_reg reg_list[2];
 	int err = 0;
 	s16 gain;
-	int i;
+	//int i;
 
-        // TODO(austin): Set limits in the device tree to something useful.
 	if (val < mode->control_properties.min_gain_val)
 		val = mode->control_properties.min_gain_val;
 	else if (val > mode->control_properties.max_gain_val)
 		val = mode->control_properties.max_gain_val;
 
 	/* translate value (from normalized analog gain) */
-	gain = (s16)((512 * mode->control_properties.gain_factor) / val);
-	gain = 512 - gain;
+	gain = val;
 
 	if (gain < IMX296_GAIN_MIN)
 		gain = IMX296_GAIN_MIN;
@@ -288,6 +286,10 @@ static int imx296_set_exposure(struct tegracam_device *tc_dev, s64 val)
 	int err = 0;
 
 	val = min_t(int, val, priv->vmax);
+
+        // val -> us
+	    //mode->control_properties.exposure_factor
+
 	imx296_write(sensor, IMX296_SHS1, priv->vmax - val, &err);
 
 	return err;
